@@ -1,7 +1,8 @@
 import { Box, Button, Center, FormControl, FormHelperText, FormLabel, Heading, Input, Link, Text } from '@chakra-ui/react'
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import React from 'react'
-import { Form, Link as RouterLink, useActionData } from 'react-router-dom'
-import { useLogin } from '../hooks/auth';
+import { Form, Link as RouterLink, redirect } from 'react-router-dom'
+import { auth } from '../lib/firestore';
 
 export const loginAction = async ({ request }) => {
 	const res = await request.formData();
@@ -9,22 +10,16 @@ export const loginAction = async ({ request }) => {
 		email: res.get("email"),
         password: res.get("password")
 	}
-    return data
+    try {
+        await signInWithEmailAndPassword(auth, data.email, data.password);
+        alert("Successfully logged in!");
+    } catch(error) {
+        alert(error.message);
+    } 
+    return redirect("/")
 }
 
 const Login = () => {
-    const { login, isloading } = useLogin();
-    const data = useActionData();
-    console.log(data);
-
-    const handleLogin = () => {
-        if (data) {
-            login({
-                email: data.email,
-                password: data.password
-            });
-        }
-    }
 
   return (
     <>
@@ -42,7 +37,7 @@ const Login = () => {
                         <Input type="password" name="password" bg="white" />
                         <FormHelperText></FormHelperText>
                     </FormControl> 
-                    <Button type="submit" w="100%" mt="20px" onClick={handleLogin}>SUBMIT</Button>
+                    <Button type="submit" w="100%" mt="20px">SUBMIT</Button>
                 </Form>
                 <Text mt="20px">Don't have an account yet? <Link as={RouterLink} to="/register" color="red">Register</Link> here!</Text>
             </Box>

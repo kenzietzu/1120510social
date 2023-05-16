@@ -6,7 +6,7 @@ import Navbar from './Navbar'
 
 const Layout = () => {
   const {user, authUser, authLoading} = useAuth();
-  if (!authUser) {
+  if (!authUser && !authLoading) {
 		return <Navigate to="/login" />
 	} 
 

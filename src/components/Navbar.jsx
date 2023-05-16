@@ -8,7 +8,6 @@ import { useAuth } from '../hooks/auth';
 
 const Navbar = () => {
     const {user, authUser, authLoading} = useAuth();
-    console.log(user);
 
     const handleLogout = async() => {
         await signOut(auth);

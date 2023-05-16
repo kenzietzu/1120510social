@@ -11,7 +11,7 @@ const Side = () => {
   return ( 
     <Center>
       <VStack>
-        <ProfileAvatar />
+        <ProfileAvatar size="2xl" src={user?.avatar}/>
         <Code>@{user?.username}</Code>
         <Button><Link>Edit Profile</Link></Button>
       </VStack>

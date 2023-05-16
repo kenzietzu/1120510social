@@ -1,9 +1,9 @@
 import { Avatar } from '@chakra-ui/react'
 import React from 'react'
 
-const ProfileAvatar = () => {
+const ProfileAvatar = ({size, src}) => {
   return (
-    <Avatar name="Charlie" size="xl" bg="gray.400" />
+    <Avatar name="Charlie" size={size} bg="gray.400" src={src} />
   )
 }
 
